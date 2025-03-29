@@ -8,24 +8,23 @@ const typeDefs = `
     }
 
     type Book {
-    bookId: ID!
+    bookId: String!
     authors: [Sting!]
     description: String!
     title: String!
-    image:
-    link:
+    image: String
+    link: String
     }
 
-    type Query {
-
-    user: User
-    me: User
-    }
     type Auth {
     token: ID!
     user: User
     }
     
+    type Query {
+    user: User
+    me: User
+    }
 `;
 
 export default typeDefs;
