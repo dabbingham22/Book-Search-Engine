@@ -3,14 +3,13 @@ import path from 'node:path';
 import db from './config/connection.js';
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
-import { typeDefs, resolvers } from 'tbd'; 
+import { typeDefs } from './schemas/index.js'; 
 
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 const server = new ApolloServer({
-  typeDefs,
-  resolvers,
+  typeDefs
 });
 
 const startApolloServer = async () => {
