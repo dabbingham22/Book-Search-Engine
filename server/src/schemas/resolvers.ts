@@ -1,10 +1,10 @@
-import { signToken } from "../utils/auth.js";
 import { AuthenticationError } from "apollo-server";
-import { User } from "../models/User.js";
+import User from "../models/User.js";
+import { signToken } from "../utils/auth.js";
 
 const resolvers = {
   Query: {
-    me: async (_parent: unknown, _args: unknown, context: { user: any }) => {
+    me: async (_parent: any, _args: any, context: { user: any }) => {
       if (context.user) {
         return await User.findOne({ _id: context.user._id }).populate(
           "savedBooks"
@@ -15,10 +15,7 @@ const resolvers = {
   },
 
   Mutation: {
-    login: async (
-      _parent: any,
-      { email, password }: { email: string; password: string }
-    ) => {
+    login: async ( _parent: any, { email, password }: { email: string; password: string }) => {
       const user = await User.findOne({ email });
       if (!user || !(await user.isCorrectPassword(password))) {
         throw new AuthenticationError("User or password incorrect");

@@ -9,7 +9,7 @@ const typeDefs = `
 
     type Book {
     bookId: String!
-    authors: [Sting!]
+    authors: [String!]
     description: String!
     title: String!
     image: String
@@ -31,16 +31,12 @@ const typeDefs = `
     }
     
     type Query {
-    me: [User]
-    books: [Book]
+    me: User
     }
 
     type Mutation {
     login(email: String!, password: String!): Auth
-    addUser(username: String!, email: String!, password: String!);
-
-    Auth
-
+    addUser(username: String!, email: String!, password: String!): Auth
     saveBook(input: BookSave!): User
     removeBook(bookId: String!): User
     }
