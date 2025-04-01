@@ -1,12 +1,12 @@
 import { AuthenticationError } from "apollo-server";
 import User from "../models/User.js";
 import { signToken } from "../utils/auth.js";
-import type { Context } from '../types/express/index.js';
+//import type { Context } from '../types/express/index.js';
 
 
 const resolvers = {
   Query: {
-    me: async (_parent: any, _args: any, context: Context) => {
+    me: async (_parent: any, _args: any, context: any) => {
       if (context.user) {
         return await User.findOne({ _id: context.user._id }).populate(
           "savedBooks"

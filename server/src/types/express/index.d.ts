@@ -1,5 +1,5 @@
 declare namespace Express {
-  interface Request {
+interface Request {
     user: {
       _id: unknown;
       username: string;
@@ -8,12 +8,12 @@ declare namespace Express {
   }
 }
 
-export interface User {
-  _id: unknown;
-  username: string;
-  email: string;
-}
+// export interface User {
+//   _id: unknown;
+//   username: string;
+//   email: string;
+// }
 
-export interface Context {
-  user?: User;
-}
+// export interface Context {
+//   user?: User;
+// }
