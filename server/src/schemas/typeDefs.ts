@@ -22,7 +22,7 @@ const typeDefs = `
     }
 
     input BookSave {
-        author: [String]
+        authors: [String]
         description: String!
         title: String!
         bookId: String!

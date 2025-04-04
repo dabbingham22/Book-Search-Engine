@@ -3,6 +3,13 @@ import User from "../models/User.js";
 import { signToken } from "../utils/auth.js";
 //import type { Context } from '../types/express/index.js';
 
+interface IUserContext { 
+  user: {
+    username: string | null;
+    email: string | null;
+    _id: string | null;
+  } | null;
+}
 
 const resolvers = {
   Query: {
@@ -42,11 +49,12 @@ const resolvers = {
     saveBook: async (
       _parent: any,
       { book }: { book: any },
-      context: { user: any }
+      context: IUserContext,
     ) => {
+      console.log(context.user);
       if (context.user) {
         return await User.findOneAndUpdate(
-          { _id: context.user._Id },
+          { _id: context.user._id },
           {
             $push: { savedBooks: book },
           },
