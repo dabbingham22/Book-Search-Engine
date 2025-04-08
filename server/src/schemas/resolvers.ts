@@ -1,6 +1,7 @@
 import { AuthenticationError } from "apollo-server";
-import User from "../models/User.js";
+import  User from "../models/User.js";
 import { signToken } from "../utils/auth.js";
+//import { isContext } from "vm";
 //import type { Context } from '../types/express/index.js';
 
 interface IUserContext { 
@@ -15,6 +16,7 @@ const resolvers = {
   Query: {
     me: async (_parent: any, _args: any, context: any) => {
       if (context.user) {
+        console.log(context.user)
         return await User.findOne({ _id: context.user._id }).populate(
           "savedBooks"
         );
@@ -32,36 +34,19 @@ const resolvers = {
       const token = signToken(user.username, user.email, user._id);
       return { token, user };
     },
-
-    addUser: async (
-      _parent: unknown,
-      {
-        username,
-        email,
-        password,
-      }: { username: string; email: string; password: string }
-    ) => {
+    addUser: async (_parent: unknown,{ username, email, password }: { username: string; email: string; password: string } ) => {
       const user = await User.create({ username, email, password });
       const token = signToken(user.username, user.email, user._id);
       return { token, user };
     },
 
-    saveBook: async (
-      _parent: any,
-      { book }: { book: any },
-      context: IUserContext,
-    ) => {
+    saveBook: async ( _parent: any, { book }: { book: any }, context: IUserContext ) => {
       console.log(context.user);
       if (context.user) {
         return await User.findOneAndUpdate(
           { _id: context.user._id },
-          {
-            $push: { savedBooks: book },
-          },
-          {
-            new: true,
-            runValidators: true,
-          }
+          { $push: { savedBooks: book } },
+          { new: true, runValidators: true }
         );
       }
       throw new AuthenticationError("Could not find user");
